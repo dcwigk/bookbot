@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sys
 from stats import get_num_words, count_characters, sort_characters
 
