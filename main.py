@@ -9,20 +9,16 @@ def get_sort_character_count(book: str) -> list[dict]:
     return sort_characters(count_characters(book))
 
 def create_character_string(book: str) -> str:
-    sort_char = get_sort_character_count(book)
-    i = 0
-    char_list = []
-    while i < len(sort_char):
-        if sort_char[i]["char"].isalpha() == False:
-            i += 1
-        else:
-            char_list.append(f"{sort_char[i]["char"]}: {sort_char[i]["num"]}")
-            i += 1
-    return "\n".join(char_list)
+    sorted_chars = get_sort_character_count(book)
+    char_lines = []
+    for item in sorted_chars:
+        if item["char"].isalpha():
+            char_lines.append(f"{item["char"]}: {item["num"]}")
+    return "\n".join(char_lines)
 
 def create_report(book: str) -> None:
     print(f"""============ BOOKBOT ============
-Analyzing book found at {sys.argv[1][1:]}...
+Analyzing book found at {sys.argv[1]}...
 ----------- Word Count ----------
 Found {get_num_words(book)} total words
 --------- Character Count -------
@@ -39,3 +35,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
