@@ -5,33 +5,35 @@ def get_book_text(filepath: str) -> str:
     with open(filepath) as f:
         return f.read()
 
-def get_sort_character_count(book: str) -> list[dict]:
-    return sort_characters(count_characters(book))
+def get_sort_character_count(book_text: str) -> list[dict]:
+    return sort_characters(count_characters(book_text))
 
-def create_character_string(book: str) -> str:
-    sorted_chars = get_sort_character_count(book)
-    char_lines = []
-    for item in sorted_chars:
-        if item["char"].isalpha():
-            char_lines.append(f"{item["char"]}: {item["num"]}")
+def create_character_string(book_text: str) -> str:
+    sorted_chars = get_sort_character_count(book_text)
+    char_lines = [f"{item["char"]}: {item["num"]}" for item in sorted_chars if item["char"].isalpha()]
     return "\n".join(char_lines)
 
-def create_report(book: str) -> None:
+def create_report(book_path: str, num_words: int, character_stats: str) -> None:
     print(f"""============ BOOKBOT ============
-Analyzing book found at {sys.argv[1]}...
+Analyzing book found at {book_path}...
 ----------- Word Count ----------
-Found {get_num_words(book)} total words
+Found {num_words} total words
 --------- Character Count -------
-{create_character_string(book)}
+{character_stats}
 ============= END ===============""")
 
 def main() -> None:
     if len(sys.argv) < 2:
         print("Usage: python3 main.py <path_to_book>")
         sys.exit(1)
-    else:
-        book = get_book_text(sys.argv[1])
-        create_report(book)
+    
+    book_path = sys.argv[1]
+    book_text = get_book_text(book_path)
+    
+    num_words = get_num_words(book_text)
+    character_stats_string = create_character_string(book_text)
+
+    create_report(book_path, num_words, character_stats_string)
 
 if __name__ == "__main__":
     main()
