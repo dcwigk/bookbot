@@ -7,9 +7,9 @@ def count_characters(file_contents: str) -> dict:
         counter[char] = counter.get(char, 0) + 1
     return counter
 
-def sort_characters(count_characters: dict) -> list[dict]:
+def sort_characters(character_counts: dict) -> list[dict]:
     char_list = []
-    for char, num in count_characters.items():
+    for char, num in character_counts.items():
         char_list.append({"char": char, "num": num})
     char_list.sort(reverse=True, key=lambda item: item["num"]) 
     return char_list
